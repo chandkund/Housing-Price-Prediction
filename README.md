@@ -40,11 +40,11 @@ This dataset is particularly useful for regression tasks where the goal is to pr
 ## Installation
 To run this project, you need to have Python and the following libraries installed:
 
-- pandas
-- numpy
-- sklearn
-- seaborn
-- matplotlib
+- `pandas`
+- `numpy`
+- `matplotlib`
+- `seaborn`
+- `scikit-learn`
   
 You can install these libraries using pip:
 
@@ -57,12 +57,12 @@ Clone the repository and install the required libraries:
 
 ## Data_Loading
 First, load the dataset using pandas:
-
-     import pandas as pd
-     raw_data = pd.read_csv("D:\\Data_Science_Project\\Project_2\\HousingData.csv")
-     df = raw_data.copy()
-     df.info()  # Check the dataset information
-
+```python
+import pandas as pd
+raw_data = pd.read_csv("D:\\Data_Science_Project\\Project_2\\HousingData.csv")
+df = raw_data.copy()
+df.info()  # Check the dataset information
+```
 
 ## Data_Cleaning_and_Preprocessing
 The following steps are performed for data cleaning and preprocessing:
@@ -70,67 +70,66 @@ The following steps are performed for data cleaning and preprocessing:
 -  Handle missing values in numerical and categorical columns using SimpleImputer.
 -  Visualize the cleaned data using box plots and histograms.
 -  Normalize and standardize the data for better model performance.
+-  
  ### Import relevant Libraries
-     from sklearn.impute import SimpleImputer
-     from sklearn.preprocessing import MinMaxScaler, StandardScaler
+ ```python
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
-    # Numerical and Categorical columns
-     numberical_col = ['CRIM', 'ZN', 'INDUS', 'AGE','LSTAT']
-     categorical_cols = ['CHAS']
+ # Numerical and Categorical columns
+ numberical_col = ['CRIM', 'ZN', 'INDUS', 'AGE','LSTAT']
+ categorical_cols = ['CHAS']
 
-    # Imputing missing values
-     numberical_imputer = SimpleImputer(strategy='mean')
-     df[numberical_col] = numberical_imputer.fit_transform(df[numberical_col])
-     categorical_imputer = SimpleImputer(strategy='most_frequent')
-     df[categorical_cols] = categorical_imputer.fit_transform(df[categorical_cols])
+ # Imputing missing values
+ numberical_imputer = SimpleImputer(strategy='mean')
+ df[numberical_col] = numberical_imputer.fit_transform(df[numberical_col])
+ categorical_imputer = SimpleImputer(strategy='most_frequent')
+ df[categorical_cols] = categorical_imputer.fit_transform(df[categorical_cols])
 
-     # Normalization
-     scaler = MinMaxScaler()
-     df[['CRIM', 'ZN','TAX','B']] = scaler.fit_transform(df[['CRIM', 'ZN','TAX','B']])
+ # Normalization
+ scaler = MinMaxScaler()
+ df[['CRIM', 'ZN','TAX','B']] = scaler.fit_transform(df[['CRIM', 'ZN','TAX','B']])
 
-     # Standardization
-      scaled = StandardScaler()
-      df[['CRIM', 'ZN','TAX','B']] = scaled.fit_transform(df[['CRIM', 'ZN','TAX','B']])
-
+ # Standardization
+ scaled = StandardScaler()
+ df[['CRIM', 'ZN','TAX','B']] = scaled.fit_transform(df[['CRIM', 'ZN','TAX','B']])
+ ```
 
 ## Exploratory_Data_Analysis
 The data is visualized using various plots to understand the distributions and relationships between variables 
+ ```python
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-     import seaborn as sns
-     import matplotlib.pyplot as plt
+# Box plots
+fig, ax = plt.subplots(ncols=7, nrows=2, figsize=(20, 10))
+ax = ax.flatten()
+for index, col in enumerate(df.columns):
+    sns.boxplot(y=col, data=df, ax=ax[index])
+plt.tight_layout(pad=0.5, w_pad=0.7, h_pad=5.0)
+plt.show()
 
-    # Box plots
-    fig, ax = plt.subplots(ncols=7, nrows=2, figsize=(20, 10))
-    ax = ax.flatten()
-    for index, col in enumerate(df.columns):
-        sns.boxplot(y=col, data=df, ax=ax[index])
-    plt.tight_layout(pad=0.5, w_pad=0.7, h_pad=5.0)
-    plt.show()
-
-    # Histograms with KDE
-    fig, ax = plt.subplots(ncols=7, nrows=2, figsize=(20, 10))
-    ax = ax.flatten()
-    for index, col in enumerate(df.columns):
+# Histograms with KDE
+fig, ax = plt.subplots(ncols=7, nrows=2, figsize=(20, 10))
+ax = ax.flatten()
+for index, col in enumerate(df.columns):
         sns.histplot(df[col], ax=ax[index], kde=True)
         ax[index].set_title(col)
-    plt.tight_layout(pad=0.5, w_pad=0.7, h_pad=5.0)
-    plt.show()
-
+plt.tight_layout(pad=0.5, w_pad=0.7, h_pad=5.0)
+plt.show()
+```
 
 ## Normalization_and_Standardization
   Normalization and standardization are applied to scale the features for better model performance.
-  
-    from sklearn.preprocessing import MinMaxScaler, StandardScaler
-
-    # Min-Max Normalization
-    scaler = MinMaxScaler()
-    df[['CRIM', 'ZN','TAX','B']] = scaler.fit_transform(df[['CRIM', 'ZN','TAX','B']])
-
-    # Standardization
-    scaled = StandardScaler()
-    df[['CRIM', 'ZN','TAX','B']] = scaled.fit_transform(df[['CRIM', 'ZN','TAX','B']])
-
-
+```python
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+# Min-Max Normalization
+scaler = MinMaxScaler()
+df[['CRIM', 'ZN','TAX','B']] = scaler.fit_transform(df[['CRIM', 'ZN','TAX','B']])
+# Standardization
+scaled = StandardScaler()
+df[['CRIM', 'ZN','TAX','B']] = scaled.fit_transform(df[['CRIM', 'ZN','TAX','B']])
+```
 ## Modeling
 Different regression models are built and evaluated:
 
@@ -140,44 +139,44 @@ Different regression models are built and evaluated:
 - Extra Trees Regressor
 
 ### Modeing
-    from sklearn.model_selection import train_test_split
-    from sklearn.linear_model import LinearRegression
-    from sklearn.tree import DecisionTreeRegressor
-    from sklearn.ensemble import RandomForestRegressor, ExtraTreesRegressor
-    from sklearn.metrics import mean_squared_error
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor, ExtraTreesRegressor
+from sklearn.metrics import mean_squared_error
+# Splitting the data
+inputs = df.drop(columns=['MEDV', 'RAD'])
+targets = df['MEDV']
+X_train, X_test, Y_train, Y_test = train_test_split(inputs, targets, test_size=0.2, random_state=42)
+# Linear Regression
+model_1 = LinearRegression()
+model_1.fit(X_train, Y_train)
+pred = model_1.predict(X_test)
+mse = mean_squared_error(Y_test, pred)
+print(f"Linear Regression MSE: {mse}")
 
-    # Splitting the data
-    inputs = df.drop(columns=['MEDV', 'RAD'])
-    targets = df['MEDV']
-    X_train, X_test, Y_train, Y_test = train_test_split(inputs, targets, test_size=0.2, random_state=42)
+# Decision Tree Regressor
+model_2 = DecisionTreeRegressor()
+model_2.fit(X_train, Y_train)
+pred = model_2.predict(X_test)
+mse = mean_squared_error(Y_test, pred)
+print(f"Decision Tree MSE: {mse}")
 
-    # Linear Regression
-    model_1 = LinearRegression()
-    model_1.fit(X_train, Y_train)
-    pred = model_1.predict(X_test)
-    mse = mean_squared_error(Y_test, pred)
-    print(f"Linear Regression MSE: {mse}")
+# Random Forest Regressor
+model_3 = RandomForestRegressor()
+model_3.fit(X_train, Y_train)
+pred = model_3.predict(X_test)
+mse = mean_squared_error(Y_test, pred)
+print(f"Random Forest MSE: {mse}")
 
-     # Decision Tree Regressor
-     model_2 = DecisionTreeRegressor()
-     model_2.fit(X_train, Y_train)
-    pred = model_2.predict(X_test)
-    mse = mean_squared_error(Y_test, pred)
-    print(f"Decision Tree MSE: {mse}")
-
-    # Random Forest Regressor
-    model_3 = RandomForestRegressor()
-    model_3.fit(X_train, Y_train)
-    pred = model_3.predict(X_test)
-    mse = mean_squared_error(Y_test, pred)
-    print(f"Random Forest MSE: {mse}")
-
-    # Extra Trees Regressor
-    model_4 = ExtraTreesRegressor()
-    model_4.fit(X_train, Y_train)
-    pred = model_4.predict(X_test)
-    mse = mean_squared_error(Y_test, pred)
-    print(f"Extra Trees MSE: {mse}")
+# Extra Trees Regressor
+model_4 = ExtraTreesRegressor()
+model_4.fit(X_train, Y_train)
+pred = model_4.predict(X_test)
+mse = mean_squared_error(Y_test, pred)
+print(f"Extra Trees MSE: {mse}")
+ ```
 
 ## Results
 The models are evaluated based on Mean Squared Error (MSE). Below are the MSE results for each model:
